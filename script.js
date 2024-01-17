@@ -60,6 +60,7 @@ const render = () => {
 };
 
 const addTodo = (todoText) => {
+  if (todoText === "") return;
   let todoExistsAlready = false;
 
   state.todos.forEach((todo) => {
@@ -94,7 +95,14 @@ const removeDoneTodos = () => {
 
 const changeTodoStatus = (element) => {
   if (!(element.nodeName === "INPUT")) {
-    element = element.parentElement.childNodes[0];
+    switch (element.nodeName) {
+      case "LI":
+        element = element.childNodes[0];
+        break;
+      case "LABEL":
+        element = element.parentElement.childNodes[0];
+        break;
+    }
     element.checked = !element.checked;
   }
 
